@@ -1,0 +1,29 @@
+h1 {
+    color: rgb(151, 51, 245);
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.header button {
+    height: 30px;
+    width: 100px;
+    border-radius: 5px;
+    border: none;
+    font-family: Tahoma;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background-color: rgb(151, 51, 245);
+    color: white;
+}
+
+.header button:hover {
+    background-color: rgb(104, 36, 168);
+    cursor: pointer;
+}

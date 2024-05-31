@@ -1,0 +1,22 @@
+.footer {
+    height: 50px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(151, 51, 245);
+
+}
+
+.footer a {
+    color: rgb(151, 51, 245);
+    text-decoration: none;
+    background-color: white;
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
+.footer a:hover,
+.footer a:active {
+    color: rgb(104, 36, 168)
+}
