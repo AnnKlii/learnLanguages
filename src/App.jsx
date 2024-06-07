@@ -5,10 +5,8 @@ import Word from './components/Word/Word';
 import WordTable from './components/WordTable/WordTable';
 import Main from './components/Main/Main';
 
-
-
-function App() {
-
+function App(props) {
+  const { english, russian } = props;
   return (
     <div className={styles.App}>
       <Header />

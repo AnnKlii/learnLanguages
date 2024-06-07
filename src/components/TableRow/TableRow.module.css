@@ -9,3 +9,7 @@
 .tableRow:hover {
     background-color: #ddd;
 }
+
+.hidden {
+    visibility: hidden;
+}

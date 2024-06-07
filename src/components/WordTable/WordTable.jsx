@@ -2,8 +2,10 @@ import styles from './WordTable.module.css'
 import items from '../../../words.json';
 import TableRow from '../TableRow/TableRow';
 import EditRow from '../EditRow/EditRow';
+import { useState } from 'react';
 
-export default function WordTable({ id, english, transcription, russian, tags, change }) {
+export default function WordTable() {
+    const [pressed, setPressed] = useState(false)
 
     return (
         <div className={styles.tableWrapper}>
@@ -17,11 +19,15 @@ export default function WordTable({ id, english, transcription, russian, tags, c
                     </tr>
                 </thead>
                 <tbody className={styles.tbody}>{
+
                     items.map((item, index) => {
                         return (
-                            item.change ? <EditRow key={item.id} word={item.english} transcription={item.transcription} translation={item.russian} tags={item.tags} /> : <TableRow key={item.id} word={item.english} transcription={item.transcription} translation={item.russian} tags={item.tags} />
+                            pressed
+                                ? <EditRow key={item.id} word={item.english} transcription={item.transcription} translation={item.russian} tags={item.tags} />
+                                : <TableRow key={item.id} word={item.english} transcription={item.transcription} translation={item.russian} tags={item.tags} />
                         )
                     })
+
                 }
                 </tbody>
             </table>

@@ -1,4 +1,5 @@
 import Buttons from "../Buttons/Buttons";
+import s from '../Buttons/Buttons.module.css'
 import styles from './TableRow.module.css';
 
 export default function TableRow(props) {
@@ -9,6 +10,7 @@ export default function TableRow(props) {
             <td>{props.transcription}</td>
             <td>{props.translation}</td>
             <td>
+                {/* <span ><BsCheckLg /> Save</span> */}
                 <Buttons />
             </td>
         </tr>
