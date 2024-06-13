@@ -6,7 +6,7 @@ export default function Word(props) {
 
     return (
         <div className={styles.word}>
-            <h1>Girl</h1>
+            <p>Girl</p>
             <span>[ɡɜːl]</span>
 
             <div onClick={() => { setPressed(!pressed) }}
