@@ -1,26 +1,32 @@
 import styles from './WordTable.module.css'
-import items from '../../../words.json';
 import { useState } from 'react';
-import { BsFillPencilFill, BsFillTrash3Fill, BsCheckLg } from "react-icons/bs";
+import { BsFillPencilFill, BsFillTrash3Fill, BsCheckLg, BsFillXCircleFill, BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 
-
-export default function WordTable() {
+export default function WordTable({ setWords, words }) {
     const [editingIndex, setEditingIndex] = useState(null);
-    const [editedItems, setEditedItems] = useState(items);
+    const [editedItems, setEditedItems] = useState(words);
+    const [currentEdit, setCurrentEdit] = useState({ english: '', transcription: '', russian: '' });
 
     const handleEdit = (index) => {
         setEditingIndex(index);
+        setCurrentEdit(editedItems[index]);
     };
 
     const handleSave = () => {
+        const newItems = [...editedItems];
+        newItems[editingIndex] = currentEdit;
+        setEditedItems(newItems);
         setEditingIndex(null);
     };
 
-    const handleChange = (index, key, value) => {
-        const newItems = [...editedItems];
-        newItems[index][key] = value;
-        setEditedItems(newItems);
+    const handleChange = (key, value) => {
+        setCurrentEdit({ ...currentEdit, [key]: value });
     };
+
+    const handleCancel = () => {
+        setEditingIndex(null);
+    };
+
 
     const handleDelete = (index) => {
         const newItems = [...editedItems];
@@ -45,19 +51,20 @@ export default function WordTable() {
                             return editingIndex === index ? (
                                 <tr className={styles.editRow} key={index}>
                                     <td>
-                                        <input value={item.english} onChange={(e) => handleChange(index, "english", e.target.value)} />
+                                        <input value={currentEdit.english} onChange={(e) => handleChange("english", e.target.value)} />
                                     </td>
                                     <td>
-                                        <input value={item.transcription} onChange={(e) => handleChange(index, "transcription", e.target.value)} />
+                                        <input value={currentEdit.transcription} onChange={(e) => handleChange("transcription", e.target.value)} />
                                     </td>
                                     <td>
-                                        <input value={item.russian} onChange={(e) => handleChange(index, "russian", e.target.value)} />
+                                        <input value={currentEdit.russian} onChange={(e) => handleChange("russian", e.target.value)} />
                                     </td>
                                     <td>
                                         <div className={styles.actions}>
                                             <span className={styles.safeBtn} onClick={() => handleSave(index)}>
                                                 Save <BsCheckLg />
                                             </span>
+                                            <BsFillXCircleFill className={styles.cancelBtn} onClick={() => handleCancel(index)} />
                                         </div>
                                     </td>
                                 </tr>
@@ -69,7 +76,7 @@ export default function WordTable() {
                                     <td>
                                         <div className={styles.actions}>
                                             <BsFillPencilFill onClick={() => handleEdit(index)} className={styles.editBtn} />
-                                            <BsFillTrash3Fill onClick={() => handleDelete(index)} className={styles.deleteBtn} />
+                                            <BsFillTrash3Fill onClick={handleDelete} className={styles.deleteBtn} />
                                         </div>
                                     </td>
                                 </tr>

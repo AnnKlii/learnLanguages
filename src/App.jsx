@@ -1,18 +1,20 @@
 import styles from './App.module.css';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Word from './components/Word/Word';
+import Game from './components/Game/Game';
 import WordTable from './components/WordTable/WordTable';
 import Main from './components/Main/Main';
+import wordsJSon from '../words.json';
+import { useState } from 'react';
 
-function App(props) {
-  const { english, russian } = props;
+function App() {
+  const [words, setWords] = useState(wordsJSon);
   return (
     <div className={styles.App}>
       <Header />
       <Main />
-      <Word />
-      <WordTable />
+      <Game setWords={setWords} words={words} />
+      <WordTable setWords={setWords} words={words} />
       <Footer />
     </div>)
 }

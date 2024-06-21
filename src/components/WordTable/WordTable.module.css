@@ -8,7 +8,6 @@
 }
 
 .table {
-    /* display: block; */
     overflow: hidden;
     table-layout: auto;
     border-collapse: collapse;
@@ -76,9 +75,13 @@ tbody tr:hover {
     align-items: center;
 }
 
-.safeBtn_hidden {
-    visibility: hidden;
-    padding: 0.3rem;
-    font-size: 12px;
-    gap: 2px;
+.cancelBtn {
+    color: red;
+}
+
+.safeBtn,
+.cancelBtn,
+.editBtn,
+.deleteBtn:hover {
+    cursor: pointer;
 }

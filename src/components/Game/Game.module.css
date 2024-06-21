@@ -1,0 +1,28 @@
+.game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.count {
+    font-size: 12px;
+    color: blueviolet;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.slider {
+    color: blueviolet;
+    width: 50px;
+    height: auto;
+}
+
+.slider:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.slider:active {
+    color: rgb(101, 4, 192);
+}

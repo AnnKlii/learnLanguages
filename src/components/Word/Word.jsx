@@ -1,16 +1,17 @@
 import styles from './Word.module.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function Word(props) {
-    const [pressed, setPressed] = useState(false)
+export default function Word({ english, transcription, russian, id }) {
+    const [translite, setTranslite] = useState(false)
+    useEffect(() => setTranslite(false), [id])
 
     return (
         <div className={styles.word}>
-            <p>Girl</p>
-            <span>[ɡɜːl]</span>
-
-            <div onClick={() => { setPressed(!pressed) }}
-                className={pressed ? `${styles.pressed}` : `${styles.unpressed}`}></div>
+            <p>{english}</p>
+            <span>{transcription}</span>
+            {translite
+                ? <p className={styles.translite} onClick={() => { setTranslite(false) }}>{russian}</p>
+                : (<button className={styles.transliteBtn} onClick={() => setTranslite(true)}>Check</button>)}
         </div >
     )
 
