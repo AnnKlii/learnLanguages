@@ -1,9 +1,15 @@
-import styles from './footer.module.css'
+import styles from './footer.module.css';
+import { NavLink } from 'react-router-dom';
 
 export default function Footer() {
     return (
-        <footer className={styles.footer}>
-            <a href="">Главная</a><a href="">Карточки слов</a><a href="">Выученные слова</a><a href="">Список слов</a>
+        <footer className={styles.footerWrp}>
+            <div className={styles.footer}>
+                <NavLink to='/'>Главная</NavLink>
+                <NavLink to='/game'>Карточки слов</NavLink>
+                {/* <NavLink to='/'>Выученные слова</NavLink> */}
+                <NavLink to='/table'>Список слов</NavLink>
+            </div>
         </footer>
     )
 }

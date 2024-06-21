@@ -1,8 +1,8 @@
-import styles from './Main.module.css'
+import styles from './Home.module.css'
 
-export default function Main() {
+export default function Home() {
     return (
-        <div className={styles.main}>
+        <div className={styles.home}>
             <div className={styles.wrapper}>
                 <section>
                     <h1>Hello</h1>

@@ -1,11 +1,16 @@
-.footer {
+.footerWrp {
+    display: flex;
     height: 50px;
+    background-color: rgb(151, 51, 245);
+    margin-top: 20px;
+}
+
+.footer {
+    width: 80%;
     margin: 10px auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    background-color: rgb(151, 51, 245);
-
 }
 
 .footer a {
