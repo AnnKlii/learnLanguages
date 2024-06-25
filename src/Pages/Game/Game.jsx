@@ -4,7 +4,7 @@ import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 import { useState } from 'react';
 
 
-export default function Game({ setWords, words }) {
+export default function Game({ words }) {
     const [count, setCount] = useState(0)
 
     function nextSlide() {
@@ -27,7 +27,7 @@ export default function Game({ setWords, words }) {
             <BsArrowLeftCircle className={styles.slider} onClick={prevSlide} />
             <div>
                 <Word {...words[count]} />
-                <p className={styles.count}>{count + 1}/{words.length}</p>
+                <p className={styles.count}>Слово {count + 1} из {words.length}</p>
             </div>
 
             <BsArrowRightCircle className={styles.slider} onClick={nextSlide} />

@@ -1,11 +1,18 @@
 import styles from './WordTable.module.css'
-import { useState } from 'react';
-import { BsFillPencilFill, BsFillTrash3Fill, BsCheckLg, BsFillXCircleFill, BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
+import { useEffect, useState } from 'react';
+import { BsFillPencilFill, BsFillTrash3Fill, BsCheckLg, BsFillXCircleFill } from "react-icons/bs";
 
-export default function WordTable({ setWords, words }) {
+export default function WordTable({ words }) {
+    const { english, transcription, russian } = words;
+
     const [editingIndex, setEditingIndex] = useState(null);
     const [editedItems, setEditedItems] = useState(words);
-    const [currentEdit, setCurrentEdit] = useState({ english: '', transcription: '', russian: '' });
+    const [currentEdit, setCurrentEdit] = useState('');
+
+
+    useEffect(() => {
+        setCurrentEdit({ english, transcription, russian })
+    }, [words])
 
     const handleEdit = (index) => {
         setEditingIndex(index);
@@ -35,41 +42,53 @@ export default function WordTable({ setWords, words }) {
     }
 
     return (
-        <div className={styles.tableWrapper}>
-            <table className={styles.table}>
-                <thead className={styles.thead}>
-                    <tr>
-                        <th>Word</th>
-                        <th>Transcription</th>
-                        <th>Translation</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody className={styles.tbody}>
-                    {
-                        editedItems.map((item, index) => {
-                            return editingIndex === index ? (
-                                <tr className={styles.editRow} key={index}>
+        <>
+            <div className={styles.tableWrapper}>
+                <table className={styles.table}>
+                    <thead className={styles.thead}>
+                        <tr>
+                            <th>Word</th>
+                            <th>Transcription</th>
+                            <th>Translation</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody className={styles.tbody}>
+                        {editedItems.map((item, index) => {
+                            return editingIndex === index
+                                ? (<tr className={styles.editRow} key={index} >
                                     <td>
-                                        <input value={currentEdit.english} onChange={(e) => handleChange("english", e.target.value)} />
+                                        <input
+                                            type='text'
+                                            value={currentEdit.english}
+                                            onChange={(e) => handleChange("english", e.target.value)} />
                                     </td>
                                     <td>
-                                        <input value={currentEdit.transcription} onChange={(e) => handleChange("transcription", e.target.value)} />
+                                        <input
+                                            type='text'
+                                            value={currentEdit.transcription}
+                                            onChange={(e) => handleChange("transcription", e.target.value)} />
                                     </td>
                                     <td>
-                                        <input value={currentEdit.russian} onChange={(e) => handleChange("russian", e.target.value)} />
+                                        <input
+                                            type='text'
+                                            value={currentEdit.russian}
+                                            onChange={(e) => handleChange("russian", e.target.value)} />
                                     </td>
                                     <td>
                                         <div className={styles.actions}>
-                                            <span className={styles.safeBtn} onClick={() => handleSave(index)}>
+                                            <span
+                                                className={styles.safeBtn}
+                                                onClick={() => handleSave(index)}>
                                                 Save <BsCheckLg />
                                             </span>
-                                            <BsFillXCircleFill className={styles.cancelBtn} onClick={() => handleCancel(index)} />
+                                            <BsFillXCircleFill
+                                                className={styles.cancelBtn}
+                                                onClick={() => handleCancel(index)} />
                                         </div>
                                     </td>
-                                </tr>
-                            ) : (
-                                <tr key={index}>
+                                </tr>)
+                                : (<tr key={index}>
                                     <td>{item.english}</td>
                                     <td>{item.transcription}</td>
                                     <td>{item.russian}</td>
@@ -79,11 +98,13 @@ export default function WordTable({ setWords, words }) {
                                             <BsFillTrash3Fill onClick={handleDelete} className={styles.deleteBtn} />
                                         </div>
                                     </td>
-                                </tr>
-                            );
+                                </tr>)
                         })}
-                </tbody>
-            </table>
-        </div>
+
+                    </tbody>
+                </table>
+            </div>
+        </>
     )
 }
+
