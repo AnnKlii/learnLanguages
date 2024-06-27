@@ -1,4 +1,5 @@
-import styles from './Header.module.css'
+import styles from './Header.module.css';
+import logo from './img/logo.svg';
 import { NavLink } from 'react-router-dom';
 
 function Header() {
@@ -12,7 +13,7 @@ function Header() {
             </div>
             <div className={styles.headerMain}>
                 <NavLink to='/' className={styles.logo}>
-                    <img src="src/assets/img/logo.svg" />
+                    <img src={logo} alt='Логотип' />
                     <h1>Learn Languages</h1>
                 </NavLink>
                 <button>Log in</button>
