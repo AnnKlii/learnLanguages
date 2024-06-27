@@ -36,12 +36,16 @@ p {
     border: none;
     border-radius: 10px;
     color: white;
-    padding: 5px 15px;
+    padding: 5px;
 }
 
 .transliteBtn:hover {
     background-color: rgb(104, 36, 168);
     cursor: pointer;
+}
+
+.transliteBtn:focus {
+    background-color: yellow;
 }
 
 .translite {

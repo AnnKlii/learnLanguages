@@ -1,17 +1,19 @@
 import styles from './Word.module.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Word(words) {
     const { english, transcription, russian, id } = words
+    const btnRef = useRef();
 
-    const [translite, setTranslite] = useState(false)
-    const [studiedWords, setStudiedWords] = useState(0)
-    const [studiedWordsId, setStudiedWordsId] = useState([])
+    const [translite, setTranslite] = useState(false);
+    const [studiedWords, setStudiedWords] = useState(0);
+    const [studiedWordsId, setStudiedWordsId] = useState([]);
 
-    useEffect(() => setTranslite(false), [id])
+    // useEffect(() => setTranslite(false), [id]);
+    useEffect(() => btnRef.current.focus(), [id]);
 
     const handleClick = () => {
-        setTranslite(true)
+        setTranslite(!translite)
 
         if (!studiedWordsId.includes(id)) {
             setStudiedWords(studiedWords + 1);
@@ -27,8 +29,8 @@ export default function Word(words) {
                 <p>{english}</p>
                 <span>{transcription}</span>
                 {translite
-                    ? <p className={styles.translite} onClick={() => { setTranslite(false) }}>{russian}</p>
-                    : (<button className={styles.transliteBtn} onClick={handleClick}>Check</button>)}
+                    ? <p className={styles.translite} onClick={handleClick}>{russian}</p>
+                    : (<button className={styles.transliteBtn} onClick={handleClick} ref={btnRef}>Проверить</button>)}
             </div >
             <p className={styles.studied}>Выучено слов {studiedWords}</p>
         </div>
