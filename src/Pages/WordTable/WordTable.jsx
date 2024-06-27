@@ -1,4 +1,4 @@
-import Row from '../../Components/Row/Row'
+import Row from '../../components/Row/Row'
 import styles from './WordTable.module.css'
 
 

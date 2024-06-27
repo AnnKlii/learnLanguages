@@ -1,5 +1,5 @@
 import styles from './Game.module.css';
-import Word from '../../Components/Word/Word';
+import Word from '../../components/Word/Word';
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 import { useState } from 'react';
 
