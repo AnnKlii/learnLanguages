@@ -1,4 +1,5 @@
-import styles from './Home.module.css'
+import styles from './Home.module.css';
+import image from '../../assets/img/home.jpg';
 
 export default function Home() {
     return (
@@ -9,7 +10,7 @@ export default function Home() {
                     <div>About project</div>
                 </section>
                 <section>
-                    <figure><img src="src/assets/img/3172798.jpg" alt="" /></figure>
+                    <figure><img src={image} alt="Welcome image" /></figure>
                 </section>
             </div>
         </div>
