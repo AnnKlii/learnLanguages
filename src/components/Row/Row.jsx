@@ -5,11 +5,9 @@ import styles from './Row.module.css';
 
 export default function Row({ words }) {
 
-    const { english, transcription, russian } = words;
-
     const [editingIndex, setEditingIndex] = useState(null);
     const [editedItems, setEditedItems] = useState(words);
-    const [currentEdit, setCurrentEdit] = useState();
+    const [currentEdit, setCurrentEdit] = useState(words);
 
     const [error, setError] = useState({ english: 'Поле не может быть пустым', transcription: 'Поле не может быть пустым', russian: 'Поле не может быть пустым' });
 
@@ -17,20 +15,13 @@ export default function Row({ words }) {
     const [transcriptionDirty, setTranscriptionDirty] = useState(false);
     const [russianDirty, setRussianDirty] = useState(false);
 
-    // const [formValid, setFormValid] = useState(true);
-
+    const [formValid, setFormValid] = useState(true);
 
     useEffect(() => {
-        setCurrentEdit({ english: '', transcription: '', russian: '' })
-    }, [words])
-
-    // useEffect(() => {
-    //     if (error) {
-    //         setFormValid(false)
-    //     }
-    //     else { setFormValid(true) }
-    // }, [error])
-    // console.log(formValid)
+        if (Object.values(currentEdit).some((item) => item === ''))
+            return setFormValid(false)
+        setFormValid(true)
+    }, [{ error }])
 
     const handleEdit = (index) => {
         setEditingIndex(index);
@@ -47,6 +38,8 @@ export default function Row({ words }) {
     const handleChange = (key, value) => {
         setCurrentEdit({ ...currentEdit, [key]: value });
     };
+
+
 
     const handleCancel = () => {
         setEditingIndex(null);
@@ -108,7 +101,7 @@ export default function Row({ words }) {
                             <div className={styles.actions}>
                                 <button className={styles.safeBtn}
                                     onClick={() => handleSave(index)}
-                                    // disabled={!formValid}
+                                    disabled={!formValid}
                                     type="submit">
                                     Save <BsCheckLg />
                                 </button>

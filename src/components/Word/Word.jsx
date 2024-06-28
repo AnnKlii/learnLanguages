@@ -9,7 +9,7 @@ export default function Word(words) {
     const [studiedWords, setStudiedWords] = useState(0);
     const [studiedWordsId, setStudiedWordsId] = useState([]);
 
-    // useEffect(() => setTranslite(false), [id]);
+    useEffect(() => setTranslite(false), [id]);
     useEffect(() => btnRef.current.focus(), [id]);
 
     const handleClick = () => {
