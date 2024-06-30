@@ -9,7 +9,8 @@ export default function Row({ words }) {
     const [editedItems, setEditedItems] = useState(words);
     const [currentEdit, setCurrentEdit] = useState(words);
 
-    const [error, setError] = useState({ english: 'Поле не может быть пустым', transcription: 'Поле не может быть пустым', russian: 'Поле не может быть пустым' });
+    const [error, setError] = useState({ english: 'ffff', transcription: 'ffff', russian: 'ffff' })
+    // const [error, setError] = useState({ english: 'Поле не может быть пустым', transcription: 'Поле не может быть пустым', russian: 'Поле не может быть пустым' });
 
     const [englishDirty, setEnglishDirty] = useState(false);
     const [transcriptionDirty, setTranscriptionDirty] = useState(false);
@@ -21,7 +22,9 @@ export default function Row({ words }) {
         if (Object.values(currentEdit).some((item) => item === ''))
             return setFormValid(false)
         setFormValid(true)
-    }, [{ error }])
+
+    }, [currentEdit])
+
 
     const handleEdit = (index) => {
         setEditingIndex(index);
@@ -37,9 +40,14 @@ export default function Row({ words }) {
 
     const handleChange = (key, value) => {
         setCurrentEdit({ ...currentEdit, [key]: value });
+
+        // const englishRe = /^[a-zA-Z]*$/gi;
+        // const russianRe = /^[а-яА-ЯЁё]$/gi;
+
+        // if (currentEdit.english.match(englishRe))
+        //     console.log('верно')
+
     };
-
-
 
     const handleCancel = () => {
         setEditingIndex(null);
@@ -71,8 +79,9 @@ export default function Row({ words }) {
                 return editingIndex === index
                     ? (<tr className={styles.editRow} key={index} >
                         <td>
-                            {(englishDirty && currentEdit.english === '') && (<div style={{ color: 'red' }}>{error.english}</div>)}
-                            <input
+                            {/* {(englishDirty && currentEdit.english === '') && (<div style={{ color: 'red' }}></div>)} */}
+                            <input style=
+                                {(englishDirty && currentEdit.english === '') ? { borderColor: 'red' } : { border: 'default' }}
                                 type='text'
                                 name='english'
                                 value={currentEdit.english}
@@ -80,8 +89,9 @@ export default function Row({ words }) {
                                 onBlur={(e) => handleBlur(e)} />
                         </td>
                         <td>
-                            {(transcriptionDirty && currentEdit.transcription === '') && (<div style={{ color: 'red' }}>{error.transcription}</div>)}
-                            <input
+                            {/* {(transcriptionDirty && currentEdit.transcription === '') && (<div style={{ borderColor: 'red' }}>{error.transcription}</div>)} */}
+                            <input style=
+                                {(transcriptionDirty && currentEdit.transcription === '') ? { borderColor: 'red' } : { border: 'default' }}
                                 type='text'
                                 name='transcription'
                                 value={currentEdit.transcription}
@@ -89,8 +99,9 @@ export default function Row({ words }) {
                                 onBlur={(e) => handleBlur(e)} />
                         </td>
                         <td>
-                            {(russianDirty && currentEdit.russian === '') && (<div style={{ color: 'red' }}>{error.russian}</div>)}
-                            <input
+                            {/* {(russianDirty && currentEdit.russian === '') && (<div style={{ color: 'red' }}>{error.russian}</div>)} */}
+                            <input style=
+                                {(russianDirty && currentEdit.russian === '') ? { borderColor: 'red' } : { border: 'default' }}
                                 type='text'
                                 name='russian'
                                 value={currentEdit.russian}
