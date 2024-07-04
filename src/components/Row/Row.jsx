@@ -3,61 +3,51 @@ import { useEffect, useState } from 'react';
 import styles from './Row.module.css';
 
 
-export default function Row({ words }) {
+export default function Row({ word, handleSave, handleDelete }) {
+    const { id, english, transcription, russian } = word;
 
-    const [editingIndex, setEditingIndex] = useState(null);
-    const [editedItems, setEditedItems] = useState(words);
-    const [currentEdit, setCurrentEdit] = useState(words);
-
-    const [error, setError] = useState({ english: 'ffff', transcription: 'ffff', russian: 'ffff' })
-    // const [error, setError] = useState({ english: 'Поле не может быть пустым', transcription: 'Поле не может быть пустым', russian: 'Поле не может быть пустым' });
+    const [edit, setEdit] = useState(false);
+    const [currentEdit, setCurrentEdit] = useState('');
 
     const [englishDirty, setEnglishDirty] = useState(false);
     const [transcriptionDirty, setTranscriptionDirty] = useState(false);
     const [russianDirty, setRussianDirty] = useState(false);
 
     const [formValid, setFormValid] = useState(true);
+    const [error, setError] = useState(false)
+
 
     useEffect(() => {
-        if (Object.values(currentEdit).some((item) => item === ''))
+        setCurrentEdit({ id, english, transcription, russian });
+    }, [word])
+
+    useEffect(() => {
+        if ((Object.values(currentEdit).some((item) => item === '')) || error)
             return setFormValid(false)
         setFormValid(true)
+    }, [currentEdit, error])
 
+    useEffect(() => {
+        const englishRe = /^[a-zA-Z]*$/gi;
+        const russianRe = /^[а-яА-ЯЁё]*$/gi;
+
+        if (!englishRe.test(currentEdit.english)) {
+            return setError({ english: 'Используйте только английские буквы' });
+        }
+        else if (!russianRe.test(currentEdit.russian)) {
+            setError({ russian: 'Используйте только русские буквы' })
+        }
+        else setError(false)
     }, [currentEdit])
-
-
-    const handleEdit = (index) => {
-        setEditingIndex(index);
-        setCurrentEdit(editedItems[index]);
-    };
-
-    const handleSave = () => {
-        const newItems = [...editedItems];
-        newItems[editingIndex] = currentEdit;
-        setEditedItems(newItems);
-        setEditingIndex(null);
-    };
 
     const handleChange = (key, value) => {
         setCurrentEdit({ ...currentEdit, [key]: value });
-
-        // const englishRe = /^[a-zA-Z]*$/gi;
-        // const russianRe = /^[а-яА-ЯЁё]$/gi;
-
-        // if (currentEdit.english.match(englishRe))
-        //     console.log('верно')
-
-    };
+    }
 
     const handleCancel = () => {
-        setEditingIndex(null);
+        setEdit(false);
+        setCurrentEdit(currentEdit);
     };
-
-    const handleDelete = (index) => {
-        const newItems = [...editedItems];
-        newItems.splice(index, 1);
-        setEditedItems(newItems);
-    }
 
     const handleBlur = (e) => {
         switch (e.target.name) {
@@ -74,67 +64,69 @@ export default function Row({ words }) {
     }
 
     return (
-        <tbody className={styles.tbody}>
-            {editedItems.map((item, index) => {
-                return editingIndex === index
-                    ? (<tr className={styles.editRow} key={index} >
-                        <td>
-                            {/* {(englishDirty && currentEdit.english === '') && (<div style={{ color: 'red' }}></div>)} */}
-                            <input style=
-                                {(englishDirty && currentEdit.english === '') ? { borderColor: 'red' } : { border: 'default' }}
-                                type='text'
-                                name='english'
-                                value={currentEdit.english}
-                                onChange={(e) => handleChange("english", e.target.value)}
-                                onBlur={(e) => handleBlur(e)} />
-                        </td>
-                        <td>
-                            {/* {(transcriptionDirty && currentEdit.transcription === '') && (<div style={{ borderColor: 'red' }}>{error.transcription}</div>)} */}
-                            <input style=
-                                {(transcriptionDirty && currentEdit.transcription === '') ? { borderColor: 'red' } : { border: 'default' }}
-                                type='text'
-                                name='transcription'
-                                value={currentEdit.transcription}
-                                onChange={(e) => handleChange("transcription", e.target.value)}
-                                onBlur={(e) => handleBlur(e)} />
-                        </td>
-                        <td>
-                            {/* {(russianDirty && currentEdit.russian === '') && (<div style={{ color: 'red' }}>{error.russian}</div>)} */}
-                            <input style=
-                                {(russianDirty && currentEdit.russian === '') ? { borderColor: 'red' } : { border: 'default' }}
-                                type='text'
-                                name='russian'
-                                value={currentEdit.russian}
-                                onChange={(e) => handleChange("russian", e.target.value)}
-                                onBlur={(e) => handleBlur(e)} />
-                        </td>
-                        <td>
-                            <div className={styles.actions}>
-                                <button className={styles.safeBtn}
-                                    onClick={() => handleSave(index)}
-                                    disabled={!formValid}
-                                    type="submit">
-                                    Save <BsCheckLg />
-                                </button>
-                                <BsFillXCircleFill
-                                    className={styles.cancelBtn}
-                                    onClick={() => handleCancel(index)} />
-                            </div>
-                        </td>
-                    </tr>)
-                    : (<tr key={index}>
-                        <td>{item.english}</td>
-                        <td>{item.transcription}</td>
-                        <td>{item.russian}</td>
-                        <td>
-                            <div className={styles.actions}>
-                                <BsFillPencilFill onClick={() => handleEdit(index)} className={styles.editBtn} />
-                                <BsFillTrash3Fill onClick={handleDelete} className={styles.deleteBtn} />
-                            </div>
-                        </td>
-                    </tr>)
-            })}
 
-        </tbody >
+        edit
+            ? (<tr>
+                <td>
+                    {(englishDirty && error.english) && (<div style={{ color: 'red' }}>{error.english}</div>)}
+                    <input style=
+                        {(englishDirty && currentEdit.english === '') ? { borderColor: 'red' } : { border: 'default' }}
+                        type='text'
+                        name='english'
+                        value={currentEdit.english}
+                        onChange={(e) => handleChange("english", e.target.value)}
+                        onBlur={(e) => handleBlur(e)} />
+                </td>
+                <td>
+                    {/* {(transcriptionDirty && currentEdit.transcription === '') && (<div style={{ borderColor: 'red' }}>{error.transcription}</div>)} */}
+                    <input style=
+                        {(transcriptionDirty && currentEdit.transcription === '') ? { borderColor: 'red' } : { border: 'default' }}
+                        type='text'
+                        name='transcription'
+                        value={currentEdit.transcription}
+                        onChange={(e) => handleChange("transcription", e.target.value)}
+                        onBlur={(e) => handleBlur(e)} />
+                </td>
+                <td>
+                    {(englishDirty && error.russian) && (<div style={{ color: 'red' }}>{error.russian}</div>)}
+                    <input style=
+                        {(russianDirty && currentEdit.russian === '') ? { borderColor: 'red' } : { border: 'default' }}
+                        type='text'
+                        name='russian'
+                        value={currentEdit.russian}
+                        onChange={(e) => handleChange("russian", e.target.value)}
+                        onBlur={(e) => handleBlur(e)} />
+                </td>
+                <td>
+                    <div className={styles.actions}>
+                        <button className={styles.safeBtn}
+                            onClick={() => {
+                                handleSave(currentEdit.id, currentEdit.english, currentEdit.transcription, currentEdit.russian);
+                                setEdit(false)
+                            }}
+                            disabled={!formValid}
+                            type="submit">
+                            Save <BsCheckLg />
+                        </button>
+                        <BsFillXCircleFill
+                            className={styles.cancelBtn}
+                            onClick={handleCancel} />
+                    </div>
+                </td>
+            </tr>)
+            : (<tr  >
+                <td>{english}</td>
+                <td>{transcription}</td>
+                <td>{russian}</td>
+                <td>
+                    <div className={styles.actions}>
+                        <BsFillPencilFill onClick={() => setEdit(true)} className={styles.editBtn} />
+                        <BsFillTrash3Fill onClick={() => handleDelete(currentEdit.id)} className={styles.deleteBtn} />
+                    </div>
+                </td>
+            </tr>
+            )
+
     )
+
 }

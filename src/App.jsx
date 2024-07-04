@@ -9,6 +9,8 @@ import styles from './App.module.css';
 function App() {
   const [words, setWords] = useState(wordsJSon);
 
+  if (!words) return <h1>Loading...</h1>
+
   return (
     <div className={styles.App}>
       <Header />

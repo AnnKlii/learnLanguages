@@ -1,8 +1,26 @@
+import { useState } from 'react';
 import Row from '../../components/Row/Row'
 import styles from './WordTable.module.css'
 
 
-export default function WordTable({ words }) {
+export default function WordTable({ words, setWords }) {
+
+    function handleSave(id, english, transcription, russian) {
+        const newWords = words.map((item, index) => {
+            if (item.id === id) {
+                item.english = english;
+                item.transcription = transcription;
+                item.russian = russian;
+                return item;
+            } return item;
+        })
+        setWords(newWords);
+
+    }
+    function handleDelete(id) {
+        const newWords = words.filter((item) => item.id !== id);
+        setWords(newWords);
+    }
 
     return (
         <>
@@ -16,7 +34,12 @@ export default function WordTable({ words }) {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <Row words={words} />
+                    <tbody>
+                        {words.map((item, index) => {
+                            return <Row key={index} word={item} handleSave={handleSave} handleDelete={handleDelete} />
+                        })
+                        }
+                    </tbody>
                 </table>
             </div>
         </>

@@ -27,3 +27,8 @@
 .slider:active {
     color: rgb(101, 4, 192);
 }
+
+.studied {
+    font-size: 18px;
+    text-align: center;
+}

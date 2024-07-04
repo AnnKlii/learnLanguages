@@ -7,7 +7,7 @@ td {
     text-overflow: ellipsis;
 }
 
-tbody tr:hover {
+tr:hover {
     background-color: #ddd;
 }
 
