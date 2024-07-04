@@ -88,7 +88,7 @@ export default function Row({ word, handleSave, handleDelete }) {
                         onBlur={(e) => handleBlur(e)} />
                 </td>
                 <td>
-                    {(englishDirty && error.russian) && (<div style={{ color: 'red' }}>{error.russian}</div>)}
+                    {(russianDirty && error.russian) && (<div style={{ color: 'red' }}>{error.russian}</div>)}
                     <input style=
                         {(russianDirty && currentEdit.russian === '') ? { borderColor: 'red' } : { border: 'default' }}
                         type='text'
