@@ -9,7 +9,7 @@ export default function WordTable() {
 
     const { words, setWords, updateServ, setUpdateServ } = useContext(MyContext);
 
-    function handleSave(id, english, transcription, russian) {
+    async function handleSave(id, english, transcription, russian) {
         const newWords = words.map((item, index) => {
             if (item.id === id) {
                 item.english = english;
@@ -19,8 +19,16 @@ export default function WordTable() {
             } return item;
         })
         setWords(newWords);
-        wordsJSON.addWords(newWords);
-        setUpdateServ(updateServ);
+
+        const obj = {
+            english,
+            transcription,
+            russian,
+            tags: "",
+            tags_json: ""
+        }
+        await wordsJSON.addWords(obj);
+        setUpdateServ(!updateServ);
 
     }
 
@@ -28,7 +36,6 @@ export default function WordTable() {
         const newWords = words.filter((item) => item.id !== id);
         setWords(newWords);
         wordsJSON.addWords(newWords);
-        setUpdateServ(updateServ);
 
     }
 

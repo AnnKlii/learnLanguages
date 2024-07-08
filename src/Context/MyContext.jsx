@@ -8,7 +8,7 @@ export function MyProvider({ children }) {
 
     useEffect(() => {
         getWordsServ()
-    }, [updateServ]);
+    }, []);
 
     async function getWordsServ() {
         const words = await wordsJSON.getWords();
