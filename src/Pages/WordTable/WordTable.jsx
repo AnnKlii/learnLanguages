@@ -8,7 +8,6 @@ import wordsJSON from '../../Services/JSONServices';
 export default function WordTable() {
 
     const { words, setWords, updateServ, setUpdateServ } = useContext(MyContext);
-    // console.log(words);
 
     function handleSave(id, english, transcription, russian) {
         const newWords = words.map((item, index) => {
