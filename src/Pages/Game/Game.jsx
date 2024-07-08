@@ -1,10 +1,13 @@
 import styles from './Game.module.css';
 import Word from '../../components/Word/Word';
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { MyContext } from '../../Context/MyContext';
 
 
-export default function Game({ words }) {
+export default function Game() {
+    const { words } = useContext(MyContext);
+
     const [count, setCount] = useState(0);
     const [studiedWords, setStudiedWords] = useState(0);
     const [studiedWordsId, setStudiedWordsId] = useState([]);

@@ -9,7 +9,6 @@ export default function Word({ word, handleClick }) {
 
     useEffect(() => {
         btnRef.current.focus();
-        console.log(btnRef);
     }, [id]);
 
     useEffect(() => {

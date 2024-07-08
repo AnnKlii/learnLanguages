@@ -1,9 +1,14 @@
-import { useState } from 'react';
-import Row from '../../components/Row/Row'
-import styles from './WordTable.module.css'
+import { useContext } from 'react';
+import { MyContext } from '../../Context/MyContext';
+import Row from '../../components/Row/Row';
+import styles from './WordTable.module.css';
+import wordsJSON from '../../Services/JSONServices';
 
 
-export default function WordTable({ words, setWords }) {
+export default function WordTable() {
+
+    const { words, setWords, updateServ, setUpdateServ } = useContext(MyContext);
+    // console.log(words);
 
     function handleSave(id, english, transcription, russian) {
         const newWords = words.map((item, index) => {
@@ -15,11 +20,17 @@ export default function WordTable({ words, setWords }) {
             } return item;
         })
         setWords(newWords);
+        wordsJSON.addWords(newWords);
+        setUpdateServ(updateServ);
 
     }
+
     function handleDelete(id) {
         const newWords = words.filter((item) => item.id !== id);
         setWords(newWords);
+        wordsJSON.addWords(newWords);
+        setUpdateServ(updateServ);
+
     }
 
     return (
