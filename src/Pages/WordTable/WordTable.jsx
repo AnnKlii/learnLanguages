@@ -10,7 +10,7 @@ export default function WordTable() {
     const { words, setWords, updateServ, setUpdateServ } = useContext(MyContext);
 
     async function handleSave(id, english, transcription, russian) {
-        const newWords = words.map((item, index) => {
+        const newWords = words.map((item) => {
             if (item.id === id) {
                 item.english = english;
                 item.transcription = transcription;

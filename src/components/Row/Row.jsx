@@ -9,9 +9,7 @@ export default function Row({ word, handleSave, handleDelete }) {
     const [edit, setEdit] = useState(false);
     const [currentEdit, setCurrentEdit] = useState('');
 
-    const [englishDirty, setEnglishDirty] = useState(false);
-    const [transcriptionDirty, setTranscriptionDirty] = useState(false);
-    const [russianDirty, setRussianDirty] = useState(false);
+    const [dirty, setDirty] = useState(false);
 
     const [formValid, setFormValid] = useState(true);
     const [error, setError] = useState(false)
@@ -27,18 +25,18 @@ export default function Row({ word, handleSave, handleDelete }) {
         setFormValid(true)
     }, [currentEdit, error])
 
-    useEffect(() => {
-        const englishRe = /^[a-zA-Z]*$/gi;
-        const russianRe = /^[а-яА-ЯЁё]*$/gi;
+    // useEffect(() => {
+    //     const englishRe = /^[a-zA-Z]*$/gi;
+    //     const russianRe = /^[а-яА-ЯЁё]*$/gi;
 
-        if (!englishRe.test(currentEdit.english)) {
-            return setError({ english: 'Используйте только английские буквы' });
-        }
-        else if (!russianRe.test(currentEdit.russian)) {
-            setError({ russian: 'Используйте только русские буквы' })
-        }
-        else setError(false)
-    }, [currentEdit])
+    //     if (!englishRe.test(currentEdit.english)) {
+    //         return setError({ english: 'Используйте только английские буквы' });
+    //     }
+    //     else if (!russianRe.test(currentEdit.russian)) {
+    //         setError({ russian: 'Используйте только русские буквы' })
+    //     }
+    //     else setError(false)
+    // }, [currentEdit])
 
     const handleChange = (key, value) => {
         setCurrentEdit({ ...currentEdit, [key]: value });
@@ -49,53 +47,54 @@ export default function Row({ word, handleSave, handleDelete }) {
         setCurrentEdit(currentEdit);
     };
 
-    const handleBlur = (e) => {
-        switch (e.target.name) {
-            case 'english':
-                setEnglishDirty(true)
-                break
-            case 'transcription':
-                setTranscriptionDirty(true)
-                break
-            case 'russian':
-                setRussianDirty(true)
-                break
+    const handleBlur = () => {
+        setDirty(true);
+
+        const englishRe = /^[a-zA-Z]*$/gi;
+        const russianRe = /^[а-яА-ЯЁё]*$/gi;
+
+        if (!englishRe.test(currentEdit.english)) {
+            return setError({ english: 'Используйте только английские буквы' });
         }
+        else if (!russianRe.test(currentEdit.russian)) {
+            setError({ russian: 'Используйте только русские буквы' })
+        }
+        else setError(false)
     }
+
 
     return (
 
         edit
             ? (<tr>
                 <td>
-                    {(englishDirty && error.english) && (<div style={{ color: 'red' }}>{error.english}</div>)}
+                    {(dirty && error.english) && (<div style={{ color: 'red' }}>{error.english}</div>)}
                     <input style=
-                        {(englishDirty && currentEdit.english === '') ? { borderColor: 'red' } : { border: 'default' }}
+                        {(dirty && currentEdit.english === '') ? { borderColor: 'red' } : { border: 'default' }}
                         type='text'
                         name='english'
                         value={currentEdit.english}
                         onChange={(e) => handleChange("english", e.target.value)}
-                        onBlur={(e) => handleBlur(e)} />
+                        onBlur={(e) => handleBlur("english", e.target.value)} />
                 </td>
                 <td>
-                    {/* {(transcriptionDirty && currentEdit.transcription === '') && (<div style={{ borderColor: 'red' }}>{error.transcription}</div>)} */}
                     <input style=
-                        {(transcriptionDirty && currentEdit.transcription === '') ? { borderColor: 'red' } : { border: 'default' }}
+                        {(dirty && currentEdit.transcription === '') ? { borderColor: 'red' } : { border: 'default' }}
                         type='text'
                         name='transcription'
                         value={currentEdit.transcription}
                         onChange={(e) => handleChange("transcription", e.target.value)}
-                        onBlur={(e) => handleBlur(e)} />
+                        onBlur={(e) => handleBlur("transcription", e.target.name)} />
                 </td>
                 <td>
-                    {(russianDirty && error.russian) && (<div style={{ color: 'red' }}>{error.russian}</div>)}
+                    {(dirty && error.russian) && (<div style={{ color: 'red' }}>{error.russian}</div>)}
                     <input style=
-                        {(russianDirty && currentEdit.russian === '') ? { borderColor: 'red' } : { border: 'default' }}
+                        {(dirty && currentEdit.russian === '') ? { borderColor: 'red' } : { border: 'default' }}
                         type='text'
                         name='russian'
                         value={currentEdit.russian}
                         onChange={(e) => handleChange("russian", e.target.value)}
-                        onBlur={(e) => handleBlur(e)} />
+                        onBlur={(e) => handleBlur("russian", e.target.name)} />
                 </td>
                 <td>
                     <div className={styles.actions}>
