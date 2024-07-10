@@ -21,6 +21,7 @@ export default function WordTable() {
         setWords(newWords);
 
         const obj = {
+            id,
             english,
             transcription,
             russian,
