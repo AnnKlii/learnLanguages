@@ -1,7 +1,7 @@
 export default class wordsJSON {
     static async getWords() {
         try {
-            const resp = await fetch("http://itgirlschool.justmakeit.ru/api/words");
+            const resp = await fetch("/api/words");
             const words = await resp.json();
             return words;
         } catch (e) {
@@ -10,7 +10,7 @@ export default class wordsJSON {
     }
     static async addWords(words) {
         try {
-            await fetch("http://itgirlschool.justmakeit.ru/api/words/add", {
+            await fetch("/api/words/add", {
                 method: "POST",
                 haeders: { "Content-Type": "application/json" },
                 body: JSON.stringify(words),
@@ -24,7 +24,7 @@ export default class wordsJSON {
         let id = words.id;
 
         try {
-            await fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/update`, {
+            await fetch(`/api/words/${id}/update`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(words)
@@ -35,11 +35,11 @@ export default class wordsJSON {
         }
     }
 
-    static async deleteData(words) {
+    static async deleteWord(words) {
         let id = words.id;
 
         try {
-            await fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/delete`, {
+            await fetch(`/api/words/${id}/delete`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" }
             });
@@ -54,7 +54,7 @@ export default class wordsJSON {
 
 
         try {
-            const resp = await fetch(`http://itgirlschool.justmakeit.ru/api/words/${i}`);
+            const resp = await fetch(`/api/words/${i}`);
             const words = await resp.json();
             return words;
         }

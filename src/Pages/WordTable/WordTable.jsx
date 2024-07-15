@@ -34,9 +34,10 @@ export default function WordTable() {
     }
 
     function handleDelete(id) {
-        const newWords = words.filter((item) => item.id !== id);
-        setWords(newWords);
-        wordsJSON.addWords(newWords);
+        // const newWords = words.filter((item) => item.id !== id);
+        // setWords(newWords);
+        wordsJSON.deleteWord(id);
+        setUpdateServ(!updateServ);
 
     }
 

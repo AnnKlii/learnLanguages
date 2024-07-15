@@ -120,7 +120,7 @@ export default function Row({ word, handleSave, handleDelete }) {
                 <td>
                     <div className={styles.actions}>
                         <BsFillPencilFill onClick={() => setEdit(true)} className={styles.editBtn} />
-                        <BsFillTrash3Fill onClick={() => handleDelete(currentEdit.id)} className={styles.deleteBtn} />
+                        <BsFillTrash3Fill onClick={(e) => handleDelete(currentEdit.id)} className={styles.deleteBtn} />
                     </div>
                 </td>
             </tr>
